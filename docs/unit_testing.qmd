@@ -1,0 +1,63 @@
+---
+title: "Unit Test Intro"
+format: html
+editor: visual
+---
+
+## 
+
+Function to take any data frame to calculate means\
+Calculate max and min of column means and return
+
+apply to the DF, over a margin of 2, using the mean function, ignoring NA
+
+```{r}
+mean_range <- function(df) {
+  col_means <- apply(X = df, MARGIN = 2, FUN = mean, na.rm = TRUE)
+  col_mean_max <- max(col_means)
+  col_mean_min <- min(col_means)
+  print(c(col_mean_max, col_mean_min))
+}
+
+mean_range(mtcars)
+```
+
+Test it
+
+```{r}
+
+expect_length(mean_range(mtcars), 3)
+# provides error
+
+# Expect the first value of mean_range mtcars to be larger than the second mean_range value
+
+expect_true(mean_range(mtcars)[1] >= mean_range(mtcars)[2])
+
+expect_type(mean_range(mtcars), "numeric")
+expect_type(mean_range(mtcars), "double")
+
+expect_true(mean_range(mtcars), is.character())
+```
+
+```{r}
+
+```
+
+## Source a script
+
+```{r}
+source(here::here("src", "food_cart_functions.R"))
+
+name_cart(food = "lasagna", animal = "giraffe")
+```
+
+```{r}
+source(here::here("src", "cork_oak_growth.R"))
+
+height_t2(32, 5, 4)
+
+tree_ages <- seq(from = 4, to = 50, by = 1)
+height_t2(height_t1 = 12, t1 = 3, t2 = tree_ages)
+
+
+```

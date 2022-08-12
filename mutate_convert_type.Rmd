@@ -1,0 +1,26 @@
+---
+title: "example"
+author: "Erica Dale"
+date: "2022-08-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+mutate to convert to character
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+
+penguins_year_chr <- penguins |> 
+  mutate(year = as.character(year))
+
+class(penguins_year_chr$year)
+
+penguins_year_num <- penguins |> 
+  mutate(year = as.numeric(year))
+```
+
+

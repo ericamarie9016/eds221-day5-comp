@@ -8,5 +8,10 @@
 # t2: tree age at time 2 (years)
 
 height_t2 <- function(height_t1, t1, t2) {
+  # stop(t1 > t2, "This requires time travel")
+  if(t2 < t1) {
+    stop("This requires time travel")
+  }
   20.7216 / (1 - (1 - 20.7216 / height_t1) * (t1 / t2) ^ 1.4486)
 }
+
