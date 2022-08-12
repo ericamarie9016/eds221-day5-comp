@@ -43,27 +43,35 @@ Add line-by-line comments wheres prompted in the code below, explaining what eac
 # ------ WHAT HAPPENS HERE? ------ #
 # ------ comment line-by-line ---- #
 
-# The line below...
-time_yr <- seq(from = 0, to = 8, by = 1)
+# The line below... creates a sequence of years in a vector to build the placeholder vector next
+time_yr <- seq(from = 0, to = 15, by = 1)
 
-# The line below...
+# The line below... creates a shell vector for the output
 proj_year <- matrix(ncol = length(fish_year0), nrow = length(time_yr))
 
-# The line below...
+# The line below... adds in the known starting data to the first row of the output matrix
 proj_year[1, ] <- fish_year0
 
-# The for loop below...
+# The for loop below... starting at the 2nd column of time_yr (code result shows 2-9)
+   # starting at 2, (i-1) is the dot product to multiply from the previous year with the original matrix fish_leslie
 for (i in 2:length(time_yr)) {
   proj_year[i,] <- fish_leslie %*% proj_year[i-1,]
 }
+
+view(proj_year)
+# Not tidy data: population (a single variable) spread over 4 columns, variable life-stage
 
 
 # The rest is wrangling & visualization (run to check it out):
 colnames(proj_year) <- c("eggs", "fry", "juvenile", "adult")
 
+# Tidy data below Below:
+## Bind together proj_year with just the time_yr
+## Collapse everything EXCEPT time_yr, put names into column "lifestage" and values into column "stage_population"
 proj_df <- data.frame(time_yr, proj_year) %>% 
   pivot_longer(cols = -time_yr, names_to = "lifestage", values_to = "stage_population")
 
+# group by lifestage once in tidy data
 ggplot(data = proj_df, aes(x = time_yr, y = stage_population)) +
   geom_line(aes(color = lifestage)) +
   scale_y_log10()
